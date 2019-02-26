@@ -1,0 +1,8 @@
+.DS_Store
+
+.idea/
+.serverless/
+.vscode/
+.webpack/
+dist/
+node_modules/
