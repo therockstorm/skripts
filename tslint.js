@@ -1,1 +1,1 @@
-module.exports = require('./dist/config/tslint')
+module.exports = require("./dist/config/tslint")

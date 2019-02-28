@@ -1,7 +1,11 @@
+const { resolveSelf } = require("../utils")
+
+const self = resolveSelf()
+
 module.exports = {
-  '*.{ts,tsx}': ['tslint --fix', 'prettier --write', 'git add'],
-  '*.{js,jsx,json,yml,yaml,md,html,css,less,scss,graphql}': [
-    'prettier --write',
-    'git add'
+  "*.{ts,tsx}": [`${self} tslint`, `${self} prettier`, "git add"],
+  "*.{js,jsx,json,yml,yaml,md,html,css,less,scss,graphql}": [
+    `${self} prettier`,
+    "git add"
   ]
 }

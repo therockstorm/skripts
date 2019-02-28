@@ -1,17 +1,8 @@
 {
+  "extends": "./base-tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "esModuleInterop": true,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
     "outDir": "dist",
-    "strict": true,
     "target": "es5"
   },
   "include": ["src"]

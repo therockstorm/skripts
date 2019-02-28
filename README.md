@@ -4,68 +4,80 @@ CLI for project scripts and configuration inspired by [react-scripts](https://gi
 
 ## Usage
 
-Run `npm install --save-dev skripts` to install the `skripts` CLI.
+Run `npm install --save-dev skripts` to install the CLI.
 
 ```
 Usage: skripts [options] [command]
 
 Options:
-  -h, --help             output usage information
+  --verbose                        enable additional logging
+  -h, --help                       output usage information
 
 Commands:
-  build                  build with serverless-webpack
-  clean [options] <dir>  clean specified dir
-  format                 format with prettier
-  sls-deploy             deploy with serverless
-  sls-invoke <func>      serverless invoke specified func
-  sls-logs <func>        show serverless logs for specified func
-  sls-remove             remove with serverless
-  jest                   test with jest
-  lint                   lint with tslint
-  pre-commit             lint and format
-  test                   lint and test
-  watch                  watch with jest
+  clean [options] <dir> [dirs...]   clean specified dir(s)
+  docker-publish [options] <image>  build and publish docker container
+  jest                              test files in `test` dir
+  tslint                            lint files
+  pre-commit                        lint and format files
+  prettier                          format files
 ```
 
-Use it via your `package.json` scripts like this:
+Use it via your `package.json` scripts:
 
 ```javascript
 {
   ...
   "scripts": {
-    "clean": "skripts clean dist --ext '*.js'",
-    "format": "skripts format"
-    "lint": "skripts lint",
-    "test": "skripts test"
+    "clean": "skripts clean dist --pattern '*.js'",
+    "format": "skripts prettier"
+    "lint": "skripts tslint",
+    "test": "skripts jest"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "skripts pre-commit"
+    }
+  }
   ...
 }
 ```
 
 ### Overriding Config
 
-Unlike `react-scripts`, `skripts` allows you to override configuration.
-
-This enables editor integration for tools that require project-based configuration like `tslint`:
+Unlike `react-scripts`, you can override `skripts` configuration. This enables editor integration for tools that require local configuration like `tslint`:
 
 ```yaml
 # In your tslint.yml file
-extends: ['./node_modules/skripts/tslint.js']
+extends: ["./node_modules/skripts/tslint.js"]
+```
+
+And TypeScript:
+
+```json
+// In your tsconfig.json file
+{
+  "extends": "./node_modules/skripts/base-tsconfig.json",
+  "include": ["src"]
+}
 ```
 
 And prevents boilerplate for things like [Serverless Framework](https://serverless.com/):
 
 ```javascript
 // In your serverless.js file
-const { serverless } = require('skripts/config')
+const { serverless } = require("skripts/config")
 
 module.exports = {
   ...serverless,
   functions: {
     myFunction: {
-      handler: 'src/handler.handle',
-      events: [{ http: 'POST /' }]
+      handler: "src/handler.handle",
+      events: [{ http: "POST /" }]
     }
   }
 }
 ```
+
+## TODO
+
+- [ ] accept args where appropriate

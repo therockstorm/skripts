@@ -1,83 +1,48 @@
 #!/usr/bin/env node
-import program from 'commander'
+import program from "commander"
 import {
-  build,
   clean,
-  format,
+  dockerPublish,
   jest,
-  lint,
-  slsDeploy,
-  slsInvoke,
-  slsLogs,
-  slsRemove,
-  test
-} from './skripts'
+  preCommit,
+  prettier,
+  tslint
+} from "./skripts"
+
+const v = (opts: any) => opts && opts.parent && opts.parent.verbose
+
+program.option("--verbose", "enable additional logging")
 
 program
-  .command('build')
-  .description('build with serverless-webpack')
-  .action(() => build())
+  .command("clean <dir> [dirs...]")
+  .option("-p, --pattern <string>", "passed to `find -name` shell command")
+  .description("clean specified dir(s)")
+  .action((dir, dirs, opts) => clean(dir, dirs, opts.pattern, v(opts)))
 
 program
-  .command('clean <dir>')
-  .option('--ext <string>', 'optional extension')
-  .description('clean specified dir')
-  .action((dir: string, { ext }) => clean(dir, ext))
+  .command("docker-publish <image>")
+  .option("--tag <string>", "image tag")
+  .description("build and publish docker container")
+  .action((image, opts) => dockerPublish(image, opts.tag, v(opts)))
 
 program
-  .command('format')
-  .description('format with prettier')
-  .action(() => format())
+  .command("jest")
+  .description("test files in `test` dir")
+  .action(opts => jest([], v(opts)))
 
 program
-  .command('sls-deploy')
-  .description('deploy with serverless')
-  .action(() => {
-    test()
-    slsDeploy()
-  })
+  .command("tslint")
+  .description("lint files")
+  .action(opts => tslint(v(opts)))
 
 program
-  .command('sls-invoke <func>')
-  .description('serverless invoke specified func')
-  .action((func: string) => slsInvoke(func))
+  .command("pre-commit")
+  .description("lint and format files")
+  .action(opts => preCommit(v(opts)))
 
 program
-  .command('sls-logs <func>')
-  .description('show serverless logs for specified func')
-  .action((func: string) => slsLogs(func))
-
-program
-  .command('sls-remove')
-  .description('remove with serverless')
-  .action(() => slsRemove())
-
-program
-  .command('jest')
-  .description('test with jest')
-  .action(() => jest())
-
-program
-  .command('lint')
-  .description('lint with tslint')
-  .action(() => lint())
-
-program
-  .command('pre-commit')
-  .description('lint and format')
-  .action(() => {
-    lint()
-    format()
-  })
-
-program
-  .command('test')
-  .description('lint and test')
-  .action(() => test())
-
-program
-  .command('watch')
-  .description('watch with jest')
-  .action(() => jest(['--watch']))
+  .command("prettier")
+  .description("format files")
+  .action(opts => prettier(v(opts)))
 
 program.parse(process.argv)
