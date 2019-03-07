@@ -45,9 +45,7 @@ export const run = (
   env: NodeJS.ProcessEnv = {}
 ): number => {
   try {
-    if (verbose) {
-      log(cmd, args)
-    }
+    if (verbose) log(cmd, args)
     return spawnSync(cmd, args, {
       env: { ...process.env, ...env },
       stdio: "inherit"

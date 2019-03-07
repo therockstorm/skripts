@@ -21,7 +21,7 @@ export const dockerPublish = (image: string, tag: string, verbose: boolean) => {
   run("docker", ["push", image], verbose)
 }
 
-export const jest = (args: string[] = [], verbose: boolean) =>
+export const jest = (args: string[], verbose: boolean) =>
   run(
     "jest",
     ["--config", JSON.stringify(require("./config/jest.config.js")), ...args],
@@ -37,9 +37,7 @@ export const preCommit = (verbose: boolean) => {
     ["--config", config("lintstagedrc.js")],
     verbose
   )
-  if (status !== 0) {
-    process.exit(status)
-  }
+  if (status !== 0) process.exit(status)
 }
 
 export const prettier = (verbose: boolean) =>

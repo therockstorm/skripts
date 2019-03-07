@@ -27,8 +27,9 @@ program
 
 program
   .command("jest")
+  .option("--watch", "watch files for changes and re-run tests")
   .description("test files in `test` dir")
-  .action(opts => jest([], v(opts)))
+  .action(opts => jest([opts.watch ? "--watch" : ""], v(opts)))
 
 program
   .command("tslint")

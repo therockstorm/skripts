@@ -16,13 +16,13 @@ Options:
 Commands:
   clean [options] <dir> [dirs...]   clean specified dir(s)
   docker-publish [options] <image>  build and publish docker container
-  jest                              test files in `test` dir
+  jest [options]                    test files in `test` dir
   tslint                            lint files
   pre-commit                        lint and format files
   prettier                          format files
 ```
 
-Use it via your `package.json` scripts:
+Use it in your `package.json` file:
 
 ```javascript
 {
@@ -81,3 +81,4 @@ module.exports = {
 ## TODO
 
 - [ ] accept args where appropriate
+- [ ] .editorconfig
