@@ -80,5 +80,4 @@ module.exports = {
 
 ## TODO
 
-- [ ] accept args where appropriate
 - [ ] .editorconfig

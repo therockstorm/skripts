@@ -17,7 +17,7 @@ export const resolveBin = (
   let path
   try {
     path = realpathSync(sync(exec))
-  } catch (_) {
+  } catch {
     // ignore
   }
   try {
