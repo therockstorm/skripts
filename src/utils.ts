@@ -5,7 +5,7 @@ import { dirname, join } from "path"
 import readPkgUp from "read-pkg-up"
 import { sync } from "which"
 
-const { pkg } = readPkgUp.sync({ cwd: realpathSync(process.cwd()) })
+const pkg = readPkgUp.sync({ cwd: realpathSync(process.cwd()) })
 
 export const config = (p: string) =>
   join(__dirname, `./config/${p}`).replace(process.cwd(), ".")
@@ -34,7 +34,7 @@ export const resolveBin = (
 }
 
 export const resolveSelf = () =>
-  pkg.name === "skripts"
+  pkg && pkg.package.name === "skripts"
     ? `node ${require.resolve("./").replace(process.cwd(), ".")}`
     : resolveBin("skripts")
 
