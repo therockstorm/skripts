@@ -1,6 +1,6 @@
 {
   "name": "skripts",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "CLI for project scripts and configuration.",
   "homepage": "https://github.com/therockstorm/skripts#readme",
   "bugs": {
@@ -41,34 +41,34 @@
     "clean": "npm run skripts -- clean dist --verbose",
     "format": "npm run skripts -- prettier --verbose",
     "lint": "npm run skripts -- tslint --verbose",
-    "push": "npm run clean && npm run build && npm publish",
+    "publish": "npm run clean && npm run build && npm publish",
     "skripts": "npm run build && node dist",
     "test": "npm run skripts -- jest --verbose",
     "help": "npm run build && node dist --help",
     "watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "@therockstorm/utils": "^3.0.7",
-    "@types/aws-lambda": "^8.10.25",
-    "@types/jest": "^24.0.13",
-    "@types/node": "^12.0.1",
+    "@therockstorm/utils": "^3.0.10",
+    "@types/aws-lambda": "^8.10.27",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.0.12",
     "@types/read-pkg-up": "^3.0.1",
     "@types/which": "^1.3.1",
     "acorn": "^6.1.1",
     "commander": "^2.20.0",
     "jest": "^24.8.0",
-    "lint-staged": "^8.1.6",
-    "prettier": "^1.17.1",
+    "lint-staged": "^9.0.2",
+    "prettier": "^1.18.2",
     "read-pkg-up": "^6.0.0",
-    "serverless": "^1.42.3",
-    "serverless-webpack": "^5.3.0",
+    "serverless": "^1.46.1",
+    "serverless-webpack": "^5.3.1",
     "source-map-support": "^0.5.12",
     "ts-jest": "^24.0.2",
-    "ts-loader": "^6.0.0",
-    "tslint": "^5.16.0",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.4.5",
-    "webpack": "^4.31.0",
+    "typescript": "^3.5.2",
+    "webpack": "^4.35.2",
     "webpack-node-externals": "^1.7.2",
     "which": "^1.3.1"
   },
@@ -78,6 +78,6 @@
     }
   },
   "devDependencies": {
-    "husky": "^2.2.0"
+    "husky": "^3.0.0"
   }
 }

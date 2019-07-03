@@ -37,7 +37,7 @@ export const preCommit = (verbose: boolean) => {
     ["--config", config("lintstagedrc.js")],
     verbose
   )
-  if (status !== 0) process.exit(status)
+  if (status !== 0) process.exit(status || -1)
 }
 
 export const prettier = (verbose: boolean) =>

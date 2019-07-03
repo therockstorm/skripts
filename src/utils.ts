@@ -43,7 +43,7 @@ export const run = (
   args: string[],
   verbose: boolean,
   env: NodeJS.ProcessEnv = {}
-): number => {
+): number | null => {
   try {
     if (verbose) log(cmd, args)
     return spawnSync(cmd, args, {
