@@ -22,23 +22,25 @@ export const dockerPublish = (image: string, tag: string, verbose: boolean) => {
 }
 
 export const jest = (args: string[], verbose: boolean) =>
-  run(
-    "jest",
-    ["--config", JSON.stringify(require("./config/jest.config.js")), ...args],
-    verbose,
-    {
-      ENVIRONMENT: "test"
-    }
+  exitOnError(
+    run(
+      "jest",
+      ["--config", JSON.stringify(require("./config/jest.config.js")), ...args],
+      verbose,
+      {
+        ENVIRONMENT: "test"
+      }
+    )
   )
 
-export const preCommit = (verbose: boolean) => {
-  const status = run(
-    resolveBin("lint-staged"),
-    ["--config", config("lintstagedrc.js")],
-    verbose
+export const preCommit = (verbose: boolean) =>
+  exitOnError(
+    run(
+      resolveBin("lint-staged"),
+      ["--config", config("lintstagedrc.js")],
+      verbose
+    )
   )
-  if (status !== 0) process.exit(status || -1)
-}
 
 export const prettier = (verbose: boolean) =>
   run(
@@ -55,15 +57,20 @@ export const prettier = (verbose: boolean) =>
   )
 
 export const tslint = (verbose: boolean) =>
-  run(
-    "tslint",
-    [
-      "--config",
-      config("tslint.js"),
-      "./**/*.ts?(x)",
-      "--exclude",
-      "./node_modules/**/*.ts?(x)",
-      "--fix"
-    ],
-    verbose
+  exitOnError(
+    run(
+      "tslint",
+      [
+        "--config",
+        config("tslint.js"),
+        "./**/*.ts?(x)",
+        "--exclude",
+        "./node_modules/**/*.ts?(x)",
+        "--fix"
+      ],
+      verbose
+    )
   )
+
+const exitOnError = (s: number | null) =>
+  s !== 0 ? process.exit(s || -1) : null
