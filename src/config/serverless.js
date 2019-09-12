@@ -22,7 +22,7 @@ module.exports = {
     region: "us-west-2",
     runtime: "nodejs10.x",
     stackTags: "${self:custom.tags}",
-    stage: "${opt:stage, env:ENVIRONMENT}",
+    stage: "${opt:stage, env:STAGE, env:ENVIRONMENT}",
     tags: "${self:custom.tags}",
     timeout: 10
   },
