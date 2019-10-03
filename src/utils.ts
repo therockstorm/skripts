@@ -34,7 +34,7 @@ export const resolveBin = (
 }
 
 export const resolveSelf = () =>
-  pkg && pkg.package.name === "skripts"
+  pkg && pkg.packageJson.name === "skripts"
     ? `node ${require.resolve("./").replace(process.cwd(), ".")}`
     : resolveBin("skripts")
 
@@ -45,7 +45,9 @@ export const run = (
   env: NodeJS.ProcessEnv = {}
 ): number | null => {
   try {
-    if (verbose) log(cmd, args)
+    if (verbose) {
+      log(cmd, args)
+    }
     return spawnSync(cmd, args, {
       env: { ...process.env, ...env },
       stdio: "inherit"
