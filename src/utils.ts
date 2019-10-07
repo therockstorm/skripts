@@ -1,13 +1,18 @@
 import { error, log, thrw } from "@therockstorm/utils"
 import { spawnSync } from "child_process"
-import { realpathSync } from "fs"
+import { existsSync, realpathSync } from "fs"
 import { dirname, join } from "path"
 import readPkgUp from "read-pkg-up"
 import { sync } from "which"
 
 const pkg = readPkgUp.sync({ cwd: realpathSync(process.cwd()) })
+const appDir = dirname((pkg || { path: "" }).path)
 
-export const config = (p: string) =>
+const fromRoot = (...p: string[]): string => join(appDir, ...p)
+
+export const hasFile = (...p: string[]): boolean => existsSync(fromRoot(...p))
+
+export const config = (p: string): string =>
   join(__dirname, `./config/${p}`).replace(process.cwd(), ".")
 
 export const resolveBin = (
@@ -22,6 +27,7 @@ export const resolveBin = (
   }
   try {
     const modPath = require.resolve(`${mod}/package.json`)
+    // eslint-disable-next-line
     const { bin } = require(modPath)
     const binPath = join(
       dirname(modPath),
@@ -33,7 +39,7 @@ export const resolveBin = (
   }
 }
 
-export const resolveSelf = () =>
+export const resolveSelf = (): string =>
   pkg && pkg.packageJson.name === "skripts"
     ? `node ${require.resolve("./").replace(process.cwd(), ".")}`
     : resolveBin("skripts")

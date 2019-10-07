@@ -14,9 +14,11 @@ module.exports = {
     },
     webpack: { includeModules: true }
   },
+  frameworkVersion: ">=1.0.0 <2.0.0",
   logRetentionInDays: 365,
   provider: {
     deploymentBucket,
+    environment: { AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 },
     memorySize: 128,
     name: "aws",
     region: "us-west-2",
@@ -27,6 +29,6 @@ module.exports = {
     timeout: 10
   },
   package: { individually: true },
-  plugins: ["serverless-webpack"],
+  plugins: ["serverless-iam-roles-per-function", "serverless-webpack"],
   service: "${file(./package.json):name}"
 }

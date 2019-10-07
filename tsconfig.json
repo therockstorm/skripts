@@ -5,5 +5,5 @@
     "outDir": "dist",
     "target": "es5"
   },
-  "include": ["src"]
+  "include": ["src", "src/config/eslint.js"]
 }

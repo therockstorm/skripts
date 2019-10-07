@@ -17,7 +17,7 @@ Commands:
   clean [options] <dir> [dirs...]   clean specified dir(s)
   docker-publish [options] <image>  build and publish docker container
   jest [options]                    test files in `test` dir
-  tslint                            lint files
+  eslint                            lint files
   pre-commit                        lint and format files
   prettier                          format files
 ```
@@ -30,7 +30,7 @@ Use it in your `package.json` file:
   "scripts": {
     "clean": "skripts clean dist --pattern '*.js'",
     "format": "skripts prettier"
-    "lint": "skripts tslint",
+    "lint": "skripts eslint",
     "test": "skripts jest"
   },
   "husky": {
@@ -44,11 +44,11 @@ Use it in your `package.json` file:
 
 ### Overriding Config
 
-Unlike `react-scripts`, you can override `skripts` configuration. This enables editor integration for tools that require local configuration like `tslint`:
+Unlike `react-scripts`, you can override `skripts` configuration. This enables editor integration for tools that require local configuration like `eslint`:
 
 ```yaml
-# In your tslint.yml file
-extends: ["./node_modules/skripts/tslint.js"]
+# In your eslint.yml file
+extends: ["./node_modules/skripts/eslint.js"]
 ```
 
 And TypeScript:
@@ -77,7 +77,3 @@ module.exports = {
   }
 }
 ```
-
-## TODO
-
-- [ ] .editorconfig

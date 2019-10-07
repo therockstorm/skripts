@@ -1,30 +1,37 @@
-import { config, resolveBin, run } from "./utils"
+import { config, hasFile, resolveBin, run } from "./utils"
+
+const exit = (s: number | null): never => process.exit(s === null ? -1 : s)
 
 export const clean = (
   dir: string,
   dirs: string[],
   pattern: string,
   verbose: boolean
-) => {
+): void => {
   const ds = [dir, ...dirs]
-  return pattern
+  pattern
     ? ds.forEach(d =>
         run("find", [d, "-type", "f", "-name", pattern, "-delete"], verbose)
       )
     : ds.forEach(d => run("rm", ["-rf", d], verbose))
 }
 
-export const dockerPublish = (image: string, tag: string, verbose: boolean) => {
+export const dockerPublish = (
+  image: string,
+  tag: string,
+  verbose: boolean
+): void => {
   const nameTag = tag ? `${image}:${tag}` : image
   run("docker", ["build", "-t", nameTag, "."], verbose)
   run("docker", ["tag", nameTag, `${image}:latest`], verbose)
   run("docker", ["push", image], verbose)
 }
 
-export const jest = (args: string[], verbose: boolean) =>
-  exitOnError(
+export const jest = (args: string[], verbose: boolean): never =>
+  exit(
     run(
       "jest",
+      // eslint-disable-next-line
       ["--config", JSON.stringify(require("./config/jest.config.js")), ...args],
       verbose,
       {
@@ -33,8 +40,8 @@ export const jest = (args: string[], verbose: boolean) =>
     )
   )
 
-export const preCommit = (verbose: boolean) =>
-  exitOnError(
+export const preCommit = (verbose: boolean): never =>
+  exit(
     run(
       resolveBin("lint-staged"),
       ["--config", config("lintstagedrc.js")],
@@ -42,35 +49,29 @@ export const preCommit = (verbose: boolean) =>
     )
   )
 
-export const prettier = (verbose: boolean) =>
-  run(
-    "prettier",
-    [
-      "--config",
-      config("prettier.config.js"),
-      "--ignore-path",
-      config(".prettierignore"),
-      "--write",
-      "./**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|html|css|less|scss|graphql)"
-    ],
-    verbose
-  )
-
-export const tslint = (verbose: boolean) =>
-  exitOnError(
+export const prettier = (verbose: boolean): never =>
+  exit(
     run(
-      "tslint",
+      "prettier",
       [
         "--config",
-        config("tslint.js"),
-        "./**/*.ts?(x)",
-        "--exclude",
-        "./node_modules/**/*.ts?(x)",
-        "--fix"
+        config("prettier.config.js"),
+        "--ignore-path",
+        config(".prettierignore"),
+        "--write",
+        "./**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|html|css|less|scss|graphql)"
       ],
       verbose
     )
   )
 
-const exitOnError = (s: number | null) =>
-  s !== 0 ? process.exit(s || -1) : null
+export const eslint = (verbose: boolean): void => {
+  const c =
+    !hasFile(".eslintrc") && !hasFile(".eslintrc.js")
+      ? ["--config", config("eslint.js")]
+      : []
+
+  exit(
+    run("eslint", [...c, "--ext", ".ts,.tsx,.js,.jsx", "--fix", "."], verbose)
+  )
+}

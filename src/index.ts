@@ -6,10 +6,11 @@ import {
   jest,
   preCommit,
   prettier,
-  tslint
+  eslint
 } from "./skripts"
 
-const v = (opts: any) => opts && opts.parent && opts.parent.verbose
+const v = (opts: { parent: { verbose: boolean } }): boolean =>
+  opts && opts.parent && opts.parent.verbose
 
 program.option("--verbose", "enable additional logging")
 
@@ -32,9 +33,9 @@ program
   .action(opts => jest([opts.watch ? "--watch" : ""], v(opts)))
 
 program
-  .command("tslint")
+  .command("eslint")
   .description("lint files")
-  .action(opts => tslint(v(opts)))
+  .action(opts => eslint(v(opts)))
 
 program
   .command("pre-commit")
