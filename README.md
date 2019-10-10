@@ -7,19 +7,14 @@ CLI for project scripts and configuration inspired by [react-scripts](https://gi
 Run `npm install --save-dev skripts` to install the CLI.
 
 ```
-Usage: skripts [options] [command]
-
-Options:
-  --verbose                        enable additional logging
-  -h, --help                       output usage information
-
+Usage: skripts [command] [options]
 Commands:
-  clean [options] <dir> [dirs...]   clean specified dir(s)
-  docker-publish [options] <image>  build and publish docker container
-  jest [options]                    test files in `test` dir
-  eslint                            lint files
-  pre-commit                        lint and format files
-  prettier                          format files
+  format
+  lint
+  pre-commit
+  test
+Options:
+  Script-dependent, the args you pass will be forwarded to the respective tool.
 ```
 
 Use it in your `package.json` file:
@@ -28,9 +23,8 @@ Use it in your `package.json` file:
 {
   ...
   "scripts": {
-    "clean": "skripts clean dist --pattern '*.js'",
-    "format": "skripts prettier"
-    "lint": "skripts eslint",
+    "format": "skripts format"
+    "lint": "skripts lint --fix",
     "test": "skripts jest"
   },
   "husky": {

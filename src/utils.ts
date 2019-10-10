@@ -1,5 +1,5 @@
 import { error, log, thrw } from "@therockstorm/utils"
-import { spawnSync } from "child_process"
+import { spawnSync, SpawnSyncReturns } from "child_process"
 import { existsSync, realpathSync } from "fs"
 import { dirname, join } from "path"
 import readPkgUp from "read-pkg-up"
@@ -7,6 +7,7 @@ import { sync } from "which"
 
 const pkg = readPkgUp.sync({ cwd: realpathSync(process.cwd()) })
 const appDir = dirname((pkg || { path: "" }).path)
+const empty = Buffer.from("", "utf8")
 
 const fromRoot = (...p: string[]): string => join(appDir, ...p)
 
@@ -44,22 +45,30 @@ export const resolveSelf = (): string =>
     ? `node ${require.resolve("./").replace(process.cwd(), ".")}`
     : resolveBin("skripts")
 
+export const exit = (s: number | null): never =>
+  process.exit(s === null ? -1 : s)
+
 export const run = (
   cmd: string,
   args: string[],
-  verbose: boolean,
+  verbose = false,
   env: NodeJS.ProcessEnv = {}
-): number | null => {
+): SpawnSyncReturns<Buffer> => {
   try {
-    if (verbose) {
-      log(cmd, args)
-    }
+    if (verbose) log(cmd, args)
     return spawnSync(cmd, args, {
       env: { ...process.env, ...env },
       stdio: "inherit"
-    }).status
+    })
   } catch (e) {
     error(e.message || e)
-    return 1
+    return {
+      pid: 0,
+      output: [],
+      stdout: empty,
+      stderr: empty,
+      signal: null,
+      status: 1
+    }
   }
 }

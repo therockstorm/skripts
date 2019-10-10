@@ -1,50 +1,39 @@
 #!/usr/bin/env node
-import program from "commander"
-import {
-  clean,
-  dockerPublish,
-  jest,
-  preCommit,
-  prettier,
-  eslint
-} from "./skripts"
+import { join } from "path"
+import { exit, run } from "./utils"
+import { sync } from "glob"
 
-const v = (opts: { parent: { verbose: boolean } }): boolean =>
-  opts && opts.parent && opts.parent.verbose
+const [executor, ignoredBin, script, ...args] = process.argv
 
-program.option("--verbose", "enable additional logging")
+const spawnScript = (): never => {
+  try {
+    const path = require.resolve(join(__dirname, "./scripts", script))
+    const res = run(executor, [path, ...args], true)
+    return res.signal ? handleSignal(res.signal) : exit(res.status)
+  } catch (error) {
+    throw new Error(`Unknown script "${script}".`)
+  }
+}
 
-program
-  .command("clean <dir> [dirs...]")
-  .option("-p, --pattern <string>", "passed to `find -name` shell command")
-  .description("clean specified dir(s)")
-  .action((dir, dirs, opts) => clean(dir, dirs, opts.pattern, v(opts)))
+const handleSignal = (signal: string | null): never => {
+  const msg = "'${script}' failed because the process exited"
+  if (signal === "SIGKILL" || signal === "SIGTERM") console.log(msg)
+  return exit(1)
+}
 
-program
-  .command("docker-publish <image>")
-  .option("--tag <string>", "image tag")
-  .description("build and publish docker container")
-  .action((image, opts) => dockerPublish(image, opts.tag, v(opts)))
-
-program
-  .command("jest")
-  .option("--watch", "watch files for changes and re-run tests")
-  .description("test files in `test` dir")
-  .action(opts => jest([opts.watch ? "--watch" : ""], v(opts)))
-
-program
-  .command("eslint")
-  .description("lint files")
-  .action(opts => eslint(v(opts)))
-
-program
-  .command("pre-commit")
-  .description("lint and format files")
-  .action(opts => preCommit(v(opts)))
-
-program
-  .command("prettier")
-  .description("format files")
-  .action(opts => prettier(v(opts)))
-
-program.parse(process.argv)
+if (script) spawnScript()
+else {
+  const path = join(__dirname, "scripts/")
+  const commands = sync(join(__dirname, "scripts", "*"))
+    .filter(s => !s.endsWith(".ts") && !s.endsWith(".map"))
+    .map(s => s.replace(path, "").replace(/\.js$/, ""))
+    .join("\n  ")
+    .trim()
+  console.log(`\n
+Usage: ${ignoredBin} [command] [options]
+Commands:
+  ${commands}
+Options:
+  Script-dependent, the args you pass will be forwarded to the respective tool.
+\n`)
+}
