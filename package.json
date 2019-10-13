@@ -1,6 +1,6 @@
 {
   "name": "skripts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "CLI for project scripts and configuration.",
   "homepage": "https://github.com/therockstorm/skripts#readme",
   "bugs": {
@@ -15,8 +15,7 @@
     "dist",
     "base-tsconfig.json",
     "config.js",
-    ".eslintrc.js",
-    "prettier.config.js"
+    ".eslintrc.js"
   ],
   "keywords": [
     "cli",
@@ -67,13 +66,14 @@
     "read-pkg-up": "^7.0.0",
     "serverless": "^1.54.0",
     "serverless-iam-roles-per-function": "^2.0.2",
+    "serverless-pseudo-parameters": "^2.5.0",
     "serverless-webpack": "^5.3.1",
     "source-map-support": "^0.5.13",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.4",
     "typescript-eslint": "0.0.1-alpha.0",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.1",
     "webpack-node-externals": "^1.7.2",
     "which": "^2.0.1"
   },
