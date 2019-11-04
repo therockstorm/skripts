@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "dist",
-    "target": "es5"
+    "module": "commonjs"
   },
   "include": ["src", "src/config/eslint.js"]
 }
