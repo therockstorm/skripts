@@ -21,7 +21,7 @@ module.exports = {
     memorySize: 128,
     name: "aws",
     region: "us-west-2",
-    runtime: "nodejs10.x",
+    runtime: "nodejs12.x",
     stackTags: "${self:custom.tags}",
     stage: "${opt:stage, env:STAGE, env:ENVIRONMENT}",
     tags: "${self:custom.tags}",
