@@ -1,4 +1,3 @@
-import { error, log, thrw } from "@therockstorm/utils"
 import { spawnSync, SpawnSyncReturns } from "child_process"
 import { existsSync, realpathSync } from "fs"
 import { dirname, join } from "path"
@@ -36,7 +35,8 @@ export const resolveBin = (
     )
     return binPath === path ? exec : binPath.replace(cwd, ".")
   } catch (err) {
-    return path ? exec : thrw(err)
+    if (path) return exec
+    throw err
   }
 }
 
@@ -55,13 +55,13 @@ export const run = (
   env: NodeJS.ProcessEnv = {}
 ): SpawnSyncReturns<Buffer> => {
   try {
-    if (verbose) log(cmd, args)
+    if (verbose) console.log(cmd, args)
     return spawnSync(cmd, args, {
       env: { ...process.env, ...env },
       stdio: "inherit"
     })
   } catch (e) {
-    error(e.message || e)
+    console.error(e.message || e)
     return {
       pid: 0,
       output: [],
