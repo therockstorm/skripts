@@ -1,6 +1,6 @@
 {
   "name": "skripts",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "CLI for project scripts and configuration.",
   "homepage": "https://github.com/therockstorm/skripts#readme",
   "bugs": {
