@@ -1,6 +1,6 @@
 const externals = require("webpack-node-externals")
 
-module.exports = slsw => ({
+module.exports = (slsw) => ({
   devtool: "source-map",
   entry: slsw.lib.entries,
   externals: [externals()],
@@ -8,5 +8,5 @@ module.exports = slsw => ({
   module: { rules: [{ test: /\.tsx?$/, loader: "ts-loader" }] },
   performance: { hints: false },
   resolve: { extensions: [".js", ".jsx", ".json", ".ts", ".tsx"] },
-  target: "node"
+  target: "node",
 })

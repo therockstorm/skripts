@@ -58,7 +58,7 @@ export const run = (
     if (verbose) console.log(cmd, args)
     return spawnSync(cmd, args, {
       env: { ...process.env, ...env },
-      stdio: "inherit"
+      stdio: "inherit",
     })
   } catch (e) {
     console.error(e.message || e)
@@ -68,7 +68,7 @@ export const run = (
       stdout: empty,
       stderr: empty,
       signal: null,
-      status: 1
+      status: 1,
     }
   }
 }

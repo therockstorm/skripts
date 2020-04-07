@@ -14,7 +14,7 @@ const res = run(resolveBin("eslint"), [
   "--ext",
   ".ts,.tsx,.js,.jsx",
   ...args,
-  "."
+  ".",
 ])
 
 exit(res.status)

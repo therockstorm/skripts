@@ -66,8 +66,8 @@ module.exports = {
   functions: {
     myFunction: {
       handler: "src/handler.handle",
-      events: [{ http: "POST /" }]
-    }
-  }
+      events: [{ http: "POST /" }],
+    },
+  },
 }
 ```

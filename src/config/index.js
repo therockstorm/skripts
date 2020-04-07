@@ -3,5 +3,5 @@ module.exports = {
   lintStaged: require("./lintstagedrc"),
   prettier: require("./prettier.config"),
   serverless: require("./serverless"),
-  webpack: slsw => require("./webpack.config")(slsw)
+  webpack: (slsw) => require("./webpack.config")(slsw),
 }

@@ -25,8 +25,8 @@ if (script) spawnScript()
 else {
   const path = join(__dirname, "scripts/")
   const commands = sync(join(__dirname, "scripts", "*"))
-    .filter(s => !s.endsWith(".ts") && !s.endsWith(".map"))
-    .map(s => s.replace(path, "").replace(/\.js$/, ""))
+    .filter((s) => !s.endsWith(".ts") && !s.endsWith(".map"))
+    .map((s) => s.replace(path, "").replace(/\.js$/, ""))
     .join("\n  ")
     .trim()
   console.log(`\n

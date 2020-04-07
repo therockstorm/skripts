@@ -9,7 +9,7 @@ const c =
     : []
 
 const res = run(resolveBin("jest"), [...c, ...args], false, {
-  ENVIRONMENT: "test"
+  ENVIRONMENT: "test",
 })
 
 exit(res.status)

@@ -14,14 +14,14 @@ const i =
     ? ["--ignore-path", config(".prettierignore")]
     : []
 
-const relativeArgs = args.map(a => a.replace(`${process.cwd()}/`, ""))
+const relativeArgs = args.map((a) => a.replace(`${process.cwd()}/`, ""))
 
 const res = run(resolveBin("prettier"), [
   ...c,
   ...i,
   "--write",
   "./**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|html|css|less|scss|graphql)",
-  ...relativeArgs
+  ...relativeArgs,
 ])
 
 exit(res.status)

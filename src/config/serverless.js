@@ -4,9 +4,9 @@ module.exports = {
     tags: {
       Creator: "serverless",
       Environment: "${self:provider.stage}",
-      Project: "${self:service.name}"
+      Project: "${self:service.name}",
     },
-    webpack: { includeModules: true }
+    webpack: { includeModules: true },
   },
   frameworkVersion: ">=1.0.0 <2.0.0",
   logRetentionInDays: 365,
@@ -14,7 +14,7 @@ module.exports = {
     deploymentBucket: process.env.SKRIPTS_DEPLOYMENT_BUCKET
       ? {
           name: process.env.SKRIPTS_DEPLOYMENT_BUCKET,
-          serverSideEncryption: "AES256"
+          serverSideEncryption: "AES256",
         }
       : null,
     environment: { AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 },
@@ -25,20 +25,20 @@ module.exports = {
     stackTags: "${self:custom.tags}",
     stage: "${opt:stage, env:STAGE, env:ENVIRONMENT}",
     tags: "${self:custom.tags}",
-    timeout: 10
+    timeout: 10,
   },
   package: { individually: true },
   plugins: [
     "serverless-iam-roles-per-function",
     "serverless-pseudo-parameters",
-    "serverless-webpack"
+    "serverless-webpack",
   ],
   service: "${file(./package.json):name}",
   vpc:
     process.env.SKRIPTS_VPC_SECURITY_GROUPS && process.env.SKRIPTS_VPC_SUBNETS
       ? {
           securityGroupIds: process.env.SKRIPTS_VPC_SECURITY_GROUPS.split(","),
-          subnetIds: process.env.SKRIPTS_VPC_SUBNETS.split(",")
+          subnetIds: process.env.SKRIPTS_VPC_SUBNETS.split(","),
         }
-      : null
+      : null,
 }

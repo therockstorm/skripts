@@ -4,11 +4,11 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   rules: {
     "@typescript-eslint/no-use-before-define": ["off"],
-    curly: ["error", "multi-line"]
+    curly: ["error", "multi-line"],
   },
   overrides: [
     {
@@ -16,8 +16,8 @@ module.exports = {
       rules: {
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/explicit-member-accessibility": "off"
-      }
-    }
-  ]
+        "@typescript-eslint/explicit-member-accessibility": "off",
+      },
+    },
+  ],
 }
