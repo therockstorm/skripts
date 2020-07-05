@@ -1,15 +1,9 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
   ],
-  rules: {
-    "@typescript-eslint/no-use-before-define": ["off"],
-    curly: ["error", "multi-line"],
-  },
   overrides: [
     {
       files: ["*.js", "*.jsx"],
@@ -20,4 +14,10 @@ module.exports = {
       },
     },
   ],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
+  rules: {
+    "@typescript-eslint/no-use-before-define": ["off"],
+    curly: ["error", "multi-line"],
+  },
 }
