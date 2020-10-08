@@ -8,7 +8,7 @@ module.exports = {
     },
     webpack: { includeModules: true },
   },
-  frameworkVersion: ">=1.0.0 <2.0.0",
+  frameworkVersion: ">=1.0.0 <3.0.0",
   logRetentionInDays: 365,
   provider: {
     deploymentBucket: process.env.SKRIPTS_DEPLOYMENT_BUCKET
