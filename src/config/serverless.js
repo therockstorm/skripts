@@ -6,10 +6,8 @@ module.exports = {
       Environment: "${self:provider.stage}",
       Project: "${self:service.name}",
     },
-    webpack: { includeModules: true },
   },
   frameworkVersion: ">=1.0.0 <3.0.0",
-  logRetentionInDays: 365,
   provider: {
     deploymentBucket: process.env.SKRIPTS_DEPLOYMENT_BUCKET
       ? {
@@ -18,6 +16,8 @@ module.exports = {
         }
       : null,
     environment: { AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 },
+    lambdaHashingVersion: "20201221",
+    logRetentionInDays: 365,
     memorySize: 128,
     name: "aws",
     region: "us-west-2",
