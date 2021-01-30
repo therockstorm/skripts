@@ -38,20 +38,19 @@
   "scripts": {
     "build": "tsc && cp -r src/config dist",
     "clean": "rm -rf dist",
-    "format": "npm run skripts -- format",
-    "lint": "npm run skripts -- lint",
-    "pub": "npm run clean && npm run build && npm publish",
-    "skripts": "npm run build && node dist",
-    "test": "npm run skripts -- test",
-    "help": "npm run build && node dist",
-    "watch": "npm run test -- --watch"
+    "format": "yarn skripts format",
+    "lint": "yarn skripts lint",
+    "pub": "yarn clean && yarn build && yarn publish",
+    "skripts": "yarn build && node dist",
+    "test": "yarn skripts test",
+    "help": "yarn build && node dist",
+    "watch": "yarn test --watch"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.71",
     "@types/glob": "^7.1.3",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
-    "@types/read-pkg-up": "^6.0.0",
     "@types/which": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
@@ -59,6 +58,7 @@
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "inquirer": "^7.3.3",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
@@ -81,7 +81,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run skripts -- pre-commit"
+      "pre-commit": "yarn skripts -- pre-commit"
     }
   }
 }
