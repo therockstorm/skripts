@@ -6,4 +6,5 @@
 dist/
 node_modules/
 public/
+cdk.out/
 coverage/
